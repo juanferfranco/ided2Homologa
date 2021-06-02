@@ -17,7 +17,7 @@ title_format = workbook.add_format({
     'border': 1,
     'align': 'center',
     'valign': 'vcenter',
-    'fg_color': 'gray',
+    'fg_color': '#36393f', #gray discord
     'color': 'white',
     'font_name': 'Verdana',
     'font_size': 12})
@@ -38,7 +38,7 @@ cell_yes_format = workbook.add_format({
     'border': 1,
     'align': 'center',
     'valign': 'vcenter',
-    'fg_color': '#00C800',
+    'fg_color': '#2ecc71', # green discord
     'color': 'black',
     'text_wrap': 1,
     'font_name': 'Verdana',
