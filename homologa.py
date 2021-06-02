@@ -2,11 +2,13 @@ import xlsxwriter
 import pandas as pd
 from bs4 import BeautifulSoup
 
-student_name = "Manuel J Muñoz Cortes"
-student_id = "000396296"
+student_name = "STEFANIA ESPINAL RAMIREZ"
+student_id = "000392658"
+
+#student_id = "000392658"
 
 # "Experiencias Interactivas" "Videojuegos" "Animación"
-student_line = "Animación"
+student_line = "Videojuegos"
 
 excel_file = "".join([student_id , student_name, student_line,".xlsx"])
 
@@ -59,7 +61,10 @@ else:
 data = pd.read_excel (student_courses)
 courses = data.values
 
-page = open('capp.html').read()
+page = open('capp.html',encoding='UTF-8').read()
+
+#encoding='UTF-8'
+
 soup = BeautifulSoup(page, 'html.parser')
 tables = soup.find_all('table', attrs={'class': 'datadisplaytable'})
 
@@ -89,8 +94,11 @@ for i in range(8):
 r0 = 4
 c0 = 1
 
+#print(courses)
+
 credits = [0]*12
 for course in courses:
+    #print(course)
     if course[0] in capp:
         if capp[course[0]] == "Si":
             worksheet.write(course[2] + r0, course[3] + c0, str(course[0]), cell_yes_format)
@@ -104,4 +112,4 @@ for course in courses:
     worksheet.write(course[2] + r0 + 1, course[3] + c0, str(course[1]), cell_format)
     credits[course[3]] = credits[course[3]] + course[1]
 
-workbook.close()
+workbook.close()    
