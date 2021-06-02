@@ -2,11 +2,8 @@ import xlsxwriter
 import pandas as pd
 from bs4 import BeautifulSoup
 
-student_name = "STEFANIA ESPINAL RAMIREZ"
-student_id = "000392658"
-
-#student_id = "000392658"
-
+student_name = ""
+student_id = ""
 # "Experiencias Interactivas" "Videojuegos" "Animación"
 student_line = "Videojuegos"
 
