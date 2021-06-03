@@ -2,11 +2,13 @@ import xlsxwriter
 import pandas as pd
 from bs4 import BeautifulSoup
 
-student_name = "ISABELLA GOMEZ OTALVARO"
-student_id = "000061067"
+student_name = ""
+student_id = ""
+
 
 # "Experiencias Interactivas" "Videojuegos" "Animación"
-student_line = "Experiencias Interactivas"
+student_line = "Animación"
+
 
 student_courses = ""
 if student_line == "Experiencias Interactivas":
@@ -61,6 +63,7 @@ for row in output_rows:
 
 capp = dict( filter( lambda elem: elem[0] in courses , capp.items()))
 
+# https://stackabuse.com/how-to-print-colored-text-in-pythons
 def printHom(text): 
     print("\033[48;5;2m{}\033[00m" .format(text))
 
