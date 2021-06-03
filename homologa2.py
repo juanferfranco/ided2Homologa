@@ -2,11 +2,11 @@ import xlsxwriter
 import pandas as pd
 from bs4 import BeautifulSoup
 
-student_name = "ANGIE VELEZ LOPEZ"
-student_id = "000364206"
+student_name = "ISABELLA GOMEZ OTALVARO"
+student_id = "000061067"
 
 # "Experiencias Interactivas" "Videojuegos" "Animación"
-student_line = "Animación"
+student_line = "Experiencias Interactivas"
 
 student_courses = ""
 if student_line == "Experiencias Interactivas":
@@ -67,11 +67,17 @@ def printHom(text):
 def printHomCreditsOverflow(text): 
     print("\033[48;5;4m{}\033[00m" .format(text))
 
+def printHomCreditsUnderflow(text): 
+    print("\033[48;5;6m{}\033[00m" .format(text))
+
 def printNoHomCredits(text): 
     print("\033[48;5;3m{}\033[00m" .format(text))
 
 def printNoHom(text): 
     print("\033[48;5;1m{}\033[00m" .format(text))
+
+def printChangos(text): 
+    print("\033[48;5;7m{}\033[00m" .format(text))
 
 totalCredits = 0
 
@@ -86,14 +92,17 @@ for pair in capp.items():
     totalCredits += creditsIded1
 
     if pair[1][0] == 'Si' and creditsIded1 == creditsIded2:
-       #printHom(str(pair))
        print(str(pair))
     elif pair[1][0] == 'Si' and creditsIded1 > creditsIded2:
-        printHomCreditsOverflow(str(pair)) 
+        printHomCreditsOverflow(str(pair))
+    elif pair[1][0] == 'Si' and creditsIded1 < creditsIded2:
+        printHomCreditsUnderflow(str(pair))
     elif pair[1][0] == 'No' and creditsIded1 == 0:
         printNoHom(str(pair))
-    else:
+    elif pair[1][0] == 'No' and creditsIded1 > 0:
         printNoHomCredits(str(pair))
+    else:
+        printChangos(str(pair))
 
 
 print("Total approved credits: {}".format(totalCredits))
