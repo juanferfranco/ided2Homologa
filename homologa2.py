@@ -2,12 +2,12 @@ import xlsxwriter
 import pandas as pd
 from bs4 import BeautifulSoup
 
-student_name = ""
-student_id = ""
+student_name = "ISA"
+student_id = "000061067"
 
 
 # "Experiencias Interactivas" "Videojuegos" "Animación"
-student_line = "Animación"
+student_line = "Experiencias Interactivas"
 
 
 student_courses = ""
@@ -110,7 +110,7 @@ for pair in capp.items():
 
 print("Total approved credits: {}".format(totalCredits))
 
-outputExcel = "".join([student_id , student_name, student_line,".xlsx"])
+outputExcel = "".join([student_id ,"-", student_name, "-",student_line,".xlsx"])
 workbook = xlsxwriter.Workbook(outputExcel)
 worksheet = workbook.add_worksheet()
 

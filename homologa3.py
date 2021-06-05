@@ -147,7 +147,7 @@ print("Total approved credits: {}".format(totalCredits))
 
 printInfoAdd()
 
-outputExcel = "".join([student_id , student_name, student_line,".xlsx"])
+outputExcel = "".join([student_id ,"-", student_name, "-",student_line,".xlsx"])
 workbook = xlsxwriter.Workbook(outputExcel)
 worksheet = workbook.add_worksheet()
 

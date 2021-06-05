@@ -7,7 +7,7 @@ student_id = ""
 # "Experiencias Interactivas" "Videojuegos" "Animación"
 student_line = "Videojuegos"
 
-excel_file = "".join([student_id , student_name, student_line,".xlsx"])
+excel_file = "".join([student_id ,"-", student_name, "-",student_line,".xlsx"])
 
 workbook = xlsxwriter.Workbook(excel_file)
 worksheet = workbook.add_worksheet()
