@@ -2,13 +2,16 @@ import xlsxwriter
 import pandas as pd
 from bs4 import BeautifulSoup
 
-student_name = ""
-student_id = ""
+student_name = "ISABELLA GOMEZ OTALVARO"
+student_id = "000061067"
 
 # "Experiencias Interactivas" "Videojuegos" "Animación"
 student_line = "Experiencias Interactivas"
 
+infoAddDict = {}
+
 def printInfoAdd():
+    global infoAddDict
 
     infoAddPage = open('infoAdd.html',encoding='UTF-8').read()
     infoAddSoup = BeautifulSoup(infoAddPage, 'html.parser')
@@ -24,8 +27,6 @@ def printInfoAdd():
                 output_row.append(column.text.strip())
                 if output_row and len(output_row) == 6:
                     infoAddOutput_rows.append(output_row)
-
-    infoAddDict = {}
 
     for item in infoAddOutput_rows:
         try:
@@ -192,9 +193,10 @@ worksheet.set_column('A:J', 15)
 for i in range(8):
     worksheet.write(3, i+1, 'Sem ' + str(i+1), cell_format)
 
-# row,column 0,0 (first course)
+# row,column 0,0 (first course) and table Height
 r0 = 4
 c0 = 1
+tableHeight = 17
 
 for course in courses:
     if course in capp:
@@ -209,4 +211,16 @@ for course in courses:
 
     worksheet.write(courses[course][1] + r0 + 1, courses[course][2] + c0, str(courses[course][0]), cell_format)
 
+worksheet.merge_range("B22:C22", "Créditos no utilizados", title_format)
+i = 1
+worksheet.write(r0 + tableHeight +i , c0, "Curso",cell_format )
+worksheet.write(r0 + tableHeight +i , c0 + 1, "Créditos",cell_format )
+i +=1
+for pair in infoAddDict.items():
+    worksheet.set_row(r0 + tableHeight +i,40)
+    worksheet.write(r0 + tableHeight +i , c0, pair[0], cell_format)
+    worksheet.write(r0 + tableHeight +i , c0 + 1, pair[1], cell_format)
+    i += 1
+    
 workbook.close()
+
