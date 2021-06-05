@@ -40,3 +40,7 @@ for item in listado:
         os.remove("./capp.html")
     else:
         print("{} capp.html does not exist".format(id))
+    if os.path.exists("./infoAdd.html"): 
+        os.remove("./infoAdd.html")
+    else:
+        print("{} infoAdd.html does not exist".format(id))

@@ -2,8 +2,8 @@ import xlsxwriter
 import pandas as pd
 from bs4 import BeautifulSoup
 
-student_name = "ISABELLA GOMEZ OTALVARO"
-student_id = "000061067"
+student_name = ""
+student_id = ""
 
 # "Experiencias Interactivas" "Videojuegos" "Animación"
 student_line = "Experiencias Interactivas"
@@ -31,8 +31,9 @@ def printInfoAdd():
     for item in infoAddOutput_rows:
         try:
             nota = float(item[5])
-            if "Pregrado" in item[3] and nota >= 3.0:
-                infoAddDict[item[2]] = int(float(item[4]))
+            creditos = int(float(item[4]))
+            if "Pregrado" in item[3] and nota >= 3.0 and creditos > 0:
+                infoAddDict[item[2]] = creditos
         except:
             pass
 

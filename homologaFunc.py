@@ -2,6 +2,36 @@ import xlsxwriter
 import pandas as pd
 from bs4 import BeautifulSoup
 
+
+def loadInfoAdd():
+    infoAddDict = {}
+
+    infoAddPage = open('infoAdd.html',encoding='UTF-8').read()
+    infoAddSoup = BeautifulSoup(infoAddPage, 'html.parser')
+    infoAddtables = infoAddSoup.find_all('table', attrs={'class': 'datadisplaytable'})
+
+    infoAddOutput_rows = []
+
+    for table in infoAddtables:
+        for table_row in table.findAll('tr'):
+            columns = table_row.findAll('td')
+            output_row = []
+            for column in columns:
+                output_row.append(column.text.strip())
+                if output_row and len(output_row) == 6:
+                    infoAddOutput_rows.append(output_row)
+
+    for item in infoAddOutput_rows:
+        try:
+            nota = float(item[5])
+            creditos = int(float(item[4]))
+            if "Pregrado" in item[3] and nota >= 3.0 and creditos > 0:
+                infoAddDict[item[2]] = creditos
+        except:
+            pass
+
+    return infoAddDict
+
 def homologa(name,id,line):
     student_name = name
     student_id = id
@@ -67,6 +97,10 @@ def homologa(name,id,line):
 
     capp = dict( filter( lambda elem: elem[0] in courses , capp.items()))
 
+    if not capp: 
+        print("{} doesn't have capp".format(student_id))
+        return
+
     #####################################################################
     # Draws the approved student's curriculum
     #####################################################################
@@ -116,9 +150,10 @@ def homologa(name,id,line):
     for i in range(8):
         worksheet.write(3, i+1, 'Sem ' + str(i+1), cell_format)
 
-    # row,column 0,0 (first course)
+    # row,column 0,0 (first course) and table Height
     r0 = 4
     c0 = 1
+    tableHeight = 17
 
     for course in courses:
         if course in capp:
@@ -132,5 +167,18 @@ def homologa(name,id,line):
             print("{} Course {} isn't in capp".format(student_id, course))
 
         worksheet.write(courses[course][1] + r0 + 1, courses[course][2] + c0, str(courses[course][0]), cell_format)
+
+    infoAddDict = loadInfoAdd()
+
+    worksheet.merge_range("B22:C22", "Créditos no utilizados", title_format)
+    i = 1
+    worksheet.write(r0 + tableHeight +i , c0, "Curso",cell_format )
+    worksheet.write(r0 + tableHeight +i , c0 + 1, "Créditos",cell_format )
+    i +=1
+    for pair in infoAddDict.items():
+        worksheet.set_row(r0 + tableHeight +i,40)
+        worksheet.write(r0 + tableHeight +i , c0, pair[0], cell_format)
+        worksheet.write(r0 + tableHeight +i , c0 + 1, pair[1], cell_format)
+        i += 1
 
     workbook.close()

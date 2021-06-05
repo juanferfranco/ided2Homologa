@@ -38,6 +38,13 @@ class SeleniumRobot():
     file.write(h)
     file.flush()
     self.driver.execute_script("window.history.go(-1)")
+    self.driver.find_element(By.CSS_SELECTOR, "label:nth-child(10) > .fieldlabeltext").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".defaultButtonSmall > div > div").click()
+    file = codecs.open("./infoAdd.html", "w", "utf−8")
+    h = self.driver.page_source
+    file.write(h)
+    file.flush()
+    self.driver.execute_script("window.history.go(-1)")
     self.driver.execute_script("window.history.go(-1)")
     self.driver.execute_script("window.history.go(-1)")
     self.driver.execute_script("window.history.go(-1)")
