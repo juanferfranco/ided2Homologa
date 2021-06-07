@@ -6,7 +6,7 @@ import os
 ########################################
 # Reads students list
 ########################################
-data = pd.read_excel ("./listado4.xlsx")
+data = pd.read_excel ("./listado.xlsx")
 listado = data.values
 
 
@@ -14,7 +14,7 @@ listado = data.values
 # Loads teacher's sigaa credentials
 ########################################
 
-sigaa = pd.read_json("./sigaaJuanFranco.json",typ = "series")
+sigaa = pd.read_json("./sigaa.json",typ = "series")
 sigaaId = sigaa.values[0]
 sigaaPassword = sigaa.values[1]
 
