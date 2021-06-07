@@ -13,7 +13,7 @@ class SeleniumRobot():
   def teardown_method(self):
     self.driver.quit()
   
-  def wait_for_window(self, timeout = 2):
+  def wait_for_window(self, timeout = 10000):
     time.sleep(round(timeout / 1000))
     wh_now = self.driver.window_handles
     wh_then = self.vars["window_handles"]
@@ -21,33 +21,43 @@ class SeleniumRobot():
       return set(wh_now).difference(set(wh_then)).pop()
   
   def getCapp(self,studentId):
-    self.driver.find_element(By.CSS_SELECTOR, "#contentItem11 > h3").click()
-    self.driver.find_element(By.ID, "Stu_ID").click()
-    self.driver.find_element(By.ID, "Stu_ID").send_keys(studentId)
-    self.driver.find_element(By.CSS_SELECTOR, "#id____UID8 > .defaultButtonSmall > div > div").click()
-    self.driver.find_element(By.CSS_SELECTOR, ".defaultButtonSmall > div > div").click()
-    #sleep(0.1)
-    self.driver.find_element(By.CSS_SELECTOR, "#contentItem18 > h3").click()
-    self.driver.find_element(By.LINK_TEXT, "Reportes de cumplimiento").click()
-    self.driver.find_element(By.LINK_TEXT, "Ing Diseño Entret Digital-Med").click()
-    self.driver.find_element(By.CSS_SELECTOR, "label:nth-child(7) > .fieldlabeltext").click()
-    self.driver.find_element(By.CSS_SELECTOR, ".defaultButtonSmall > div > div").click()
-    #sleep(0.1)
-    file = codecs.open("./capp.html", "w", "utf−8")
-    h = self.driver.page_source
-    file.write(h)
-    file.flush()
-    self.driver.execute_script("window.history.go(-1)")
-    self.driver.find_element(By.CSS_SELECTOR, "label:nth-child(10) > .fieldlabeltext").click()
-    self.driver.find_element(By.CSS_SELECTOR, ".defaultButtonSmall > div > div").click()
-    file = codecs.open("./infoAdd.html", "w", "utf−8")
-    h = self.driver.page_source
-    file.write(h)
-    file.flush()
-    self.driver.execute_script("window.history.go(-1)")
-    self.driver.execute_script("window.history.go(-1)")
-    self.driver.execute_script("window.history.go(-1)")
-    self.driver.execute_script("window.history.go(-1)")
+    thereIsCapp = False
+    try:
+      self.driver.find_element(By.CSS_SELECTOR, "#contentItem11 > h3").click()
+      self.driver.find_element(By.ID, "Stu_ID").click()
+      self.driver.find_element(By.ID, "Stu_ID").send_keys(studentId)
+      self.driver.find_element(By.CSS_SELECTOR, "#id____UID8 > .defaultButtonSmall > div > div").click()
+      self.driver.find_element(By.CSS_SELECTOR, ".defaultButtonSmall > div > div").click()
+      #sleep(0.1)
+      self.driver.find_element(By.CSS_SELECTOR, "#contentItem18 > h3").click()
+      self.driver.find_element(By.LINK_TEXT, "Reportes de cumplimiento").click()
+      self.driver.find_element(By.LINK_TEXT, "Ing Diseño Entret Digital-Med").click()
+      self.driver.find_element(By.CSS_SELECTOR, "label:nth-child(7) > .fieldlabeltext").click()
+      self.driver.find_element(By.CSS_SELECTOR, ".defaultButtonSmall > div > div").click()
+      #sleep(0.1)
+      file = codecs.open("./capp.html", "w", "utf−8")
+      h = self.driver.page_source
+      file.write(h)
+      file.flush()
+      self.driver.execute_script("window.history.go(-1)")
+      self.driver.find_element(By.CSS_SELECTOR, "label:nth-child(10) > .fieldlabeltext").click()
+      self.driver.find_element(By.CSS_SELECTOR, ".defaultButtonSmall > div > div").click()
+      file = codecs.open("./infoAdd.html", "w", "utf−8")
+      h = self.driver.page_source
+      file.write(h)
+      file.flush()
+      thereIsCapp = True
+      self.driver.execute_script("window.history.go(-1)")
+      self.driver.execute_script("window.history.go(-1)")
+      self.driver.execute_script("window.history.go(-1)")
+      self.driver.execute_script("window.history.go(-1)")
+    except Exception as e:
+      print("{} doesn't have capp".format(studentId))
+      print(e)
+      self.driver.execute_script("window.history.go(-1)")
+      self.driver.execute_script("window.history.go(-1)")
+
+    return thereIsCapp
 
   def initCapp(self, user,id):
     self.driver.get("https://www.upb.edu.co/es/home")

@@ -6,7 +6,7 @@ import os
 ########################################
 # Reads students list
 ########################################
-data = pd.read_excel ("./listado.xlsx")
+data = pd.read_excel ("./listado4.xlsx")
 listado = data.values
 
 
@@ -14,7 +14,7 @@ listado = data.values
 # Loads teacher's sigaa credentials
 ########################################
 
-sigaa = pd.read_json("./sigaa.json",typ = "series")
+sigaa = pd.read_json("./sigaaJuanFranco.json",typ = "series")
 sigaaId = sigaa.values[0]
 sigaaPassword = sigaa.values[1]
 
@@ -34,13 +34,14 @@ for item in listado:
     name = item[0]
     id = str(item[1]).zfill(9)
     line = item[4]
-    robot.getCapp(id)
-    homologaFunc.homologa(name,id,line)
-    if os.path.exists("./capp.html"): 
-        os.remove("./capp.html")
-    else:
-        print("{} capp.html does not exist".format(id))
-    if os.path.exists("./infoAdd.html"): 
-        os.remove("./infoAdd.html")
-    else:
-        print("{} infoAdd.html does not exist".format(id))
+    thereIsCapp = robot.getCapp(id)
+    if thereIsCapp:
+        homologaFunc.homologa(name,id,line)
+        if os.path.exists("./capp.html"): 
+            os.remove("./capp.html")
+        else:
+            print("{} capp.html does not exist".format(id))
+        if os.path.exists("./infoAdd.html"): 
+            os.remove("./infoAdd.html")
+        else:
+            print("{} infoAdd.html does not exist".format(id))
