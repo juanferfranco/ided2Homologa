@@ -32,7 +32,7 @@ def printInfoAdd():
         try:
             nota = float(item[5])
             creditos = int(float(item[4]))
-            if "Pregrado" in item[3] and nota >= 3.0 and creditos > 0:
+            if "pregrado" in item[3].lower() and nota >= 3.0 and creditos > 0:    
                 infoAddDict[item[2]] = creditos
         except:
             pass
