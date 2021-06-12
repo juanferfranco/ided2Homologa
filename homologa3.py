@@ -2,11 +2,11 @@ import xlsxwriter
 import pandas as pd
 from bs4 import BeautifulSoup
 
-student_name = ""
-student_id = ""
+student_name = "JHONY A. ATEHORTUA MEJIA"
+student_id = "000318647"
 
 # "Experiencias Interactivas" "Videojuegos" "Animación"
-student_line = "Experiencias Interactivas"
+student_line = "Videojuegos"
 
 infoAddDict = {}
 
@@ -75,8 +75,16 @@ for table in tables:
       output_row = []
       for column in columns:
          output_row.append(column.text.strip())
-      if output_row and (output_row[0] == 'Si' or output_row[0] == 'No' or (output_row[0] == '' and len(output_row) >= 4 and len(output_row) <= 5)):
-         output_rows.append(output_row)
+      if output_row and (output_row[0] == 'Si' or output_row[0] == 'No' \
+         or (output_row[0] == '' and len(output_row) >= 4 and len(output_row) <= 5)):
+            output_rows.append(output_row)
+      elif len(output_row) == 3:
+        # rare case when homologate a course with 3 courses. The
+        # course 3 is not saved in html table with first column
+        # empty.
+        output_row.insert(0,'')
+        output_rows.append(output_row)
+        print(output_row)
 
 capp = {}
 last_key = 'none'
@@ -98,6 +106,8 @@ for row in output_rows:
 
 
 capp = dict( filter( lambda elem: elem[0] in courses , capp.items()))
+
+
 
 
 # https://stackabuse.com/how-to-print-colored-text-in-pythons
